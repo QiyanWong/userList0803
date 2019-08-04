@@ -11,8 +11,8 @@ class Pagination extends Component {
   }
 
   componentDidMount() {
-    this.setCurPage(1);
-   // this.props.resetRedirect();
+  //   this.setCurPage(1);
+  //  this.props.resetRedirect();
   }
 
   //一会加上
@@ -24,9 +24,9 @@ class Pagination extends Component {
 
   setCurPage = curPage => {
     //const { dispatch } = this.props;
-    this.props.getCount();
+    // this.props.getCount();
     this.props.fetchPage(curPage, 5);
-    this.props.setStatusCurPage(curPage);
+    // this.props.setStatusCurPage(curPage);
     // dispatch(fetchPage(curPage, 5));
     // dispatch(setStatusCurPage(curPage));
     const { pageSize } = this.props.page.pageSize;

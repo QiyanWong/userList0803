@@ -356,7 +356,7 @@ const getCountSuccess = count => {
 
 const getCountFail = err => {
   return {
-    type: 'GET_COUNT_SUCCESS_FAIL',
+    type: 'GET_COUNT_FAIL',
     err
   };
 };
