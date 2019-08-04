@@ -6,9 +6,9 @@ import Pagination from '../../containers/Pagination';
 
 class UserList extends Component {
   componentDidMount() {
-    //this.props.dispatch(getUsers());
+    // this.props.dispatch(getUsers());
     this.props.dispatch(fetchPage(1, 5));
-    //this.props.resetRedirect();
+    this.props.resetRedirect();
   }
   //一会加上
   // componentDidUpdate(prevProps, prevState) {
