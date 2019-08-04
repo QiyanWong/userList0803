@@ -108,7 +108,7 @@ export const deleteUser = (id, deleteUser) => {
       .delete(`http://localhost:8080/api/users/${id}`, deleteUser)
       .then(response => {
         dispatch(deleteUserSuccess(id));
-        dispatch(fetchPage());
+        dispatch(fetchPage(this.props.curPage, 5));
         console.log('delete user success');
       })
       .catch(error => {
@@ -260,45 +260,9 @@ export const changeSearchInput = (input) => {
   };
 };
 
-// Fetch
-// const fetchStart = () =>{
+// export const emptySearchInput = () => {
 //   return {
-//     type: 'FETCH_START',
-//   };
-// }
-// const fetchSuccess = (users, matrix) =>{
-//   return {
-//     type: 'FETCH_SUCCESS',
-//     users,
-//     matrix,
-//   };
-// }
-// const fetchFail = () =>{
-//   return {
-//     type: 'FETCH_FAIL'
-//   };
-// }
-// export const fetch = (total) => {
-//   return (dispatch) => {
-//     console.log("fetch success");
-//     dispatch(fetchStart());
-//     axios
-//       .get('http://localhost:8080/api/fetch')
-//       .then(response => {
-//         let pages = total / 5;
-//         let matrix = new Array(pages);
-//         let k = 0;
-//         for(let i = 0; i < pages; i++) {
-//             matrix[i] = new Array(5);
-//         for(let j = 0; j < 5; j++){
-//           matrix[i][j] = this.props.curUserList[k++];
-//         }
-//     }
-//         dispatch(fetchSuccess(response.data, matrix));
-//       })
-//       .catch(err => {
-//         dispatch(fetchFail(err));
-//       });
+//     type: 'EMPTY_SEARCH_INPUT',
 //   }
 // }
 

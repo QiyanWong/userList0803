@@ -103,21 +103,3 @@ class CreateUser extends Component {
 }
 
 export default CreateUser;
-// const mapStateToProps = (state) => {
-//   return {
-//     users: state.getUsers.users
-//   };
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     getUsers: () => {
-//       dispatch(getUsers());
-//     },
-//     createUser: (user) => {
-//       dispatch(createUser(user));
-//     }
-//   }
-// }
-
-// export default connect(mapStateToProps,mapDispatchToProps)(CreateUser);

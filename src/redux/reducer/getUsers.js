@@ -4,13 +4,13 @@ const initState = {
   err: null,
   isSearching: false,
   searchUsers: [],
-
+  //page: [],
   curPage: 1,
   count: 0,
   pageSize: 5,
   startIndex: 0,
   pageOfUsers: [],
-  pageNumber: 0,
+  pageNumber: [],
 };
 
 const getUsers = (state = initState, action) => {
@@ -53,6 +53,7 @@ const getUsers = (state = initState, action) => {
 
       return {
         ...state,
+        curPage: state.curPage,
         pageOfUsers: [
           ...state.pageOfUsers.slice(0, index),
           ...state.pageOfUsers.slice(index + 1)
@@ -115,12 +116,12 @@ const getUsers = (state = initState, action) => {
         ...state,
         isLoading: false,
         // err: null,
-        pageNumber: newUser
+        pageOfUsers: newUser
       };
     
     // Sort Users
     case 'SORT_USERS': {
-      const sortedUsers = [...state.pageOfUsers]; //user -- page of users pagination之后需要改
+      const sortedUsers = [...state.pageOfUsers]; 
       const key = action.key;
       sortedUsers.sort((user1, user2) => {
         if (typeof(user1[key]) === 'number') {
@@ -170,13 +171,11 @@ const getUsers = (state = initState, action) => {
       }
     }
     case 'BACK_TO_HOME' : {
-      
       return{
         ...state,
-        searchedUser : [],
+        searchUsers : [],
         isSearching : false,
       }
-      
     }
     
     // Fetch Page
@@ -189,6 +188,22 @@ const getUsers = (state = initState, action) => {
       const size = state.pageSize;
       const curPage = action.page;
       const startIndex = (curPage - 1) * size;
+      // console.log('reduce testing size', size);
+      // console.log('reduce testing curPage', curPage);
+      // console.log('reduce testing startIndex', startIndex);
+      // console.log('reduce testing action.pagesize', action.pageSize);
+      //getCount();
+      // const count = state.count;
+      // console.log('!!!!!getCount',getCount());
+      // const pageNumber = [];
+    
+      // const totalPages = Math.ceil(count / size);
+      // let startPage = 1, endPage = totalPages;
+      // console.log('reducers count is', count);
+      // for (let i = startPage; i <= endPage; i++) {
+      //   pageNumber.push(i);
+      //   console.log('reducers already pushed', pageNumber);
+      
       return {
         ...state,
         pageOfUsers: action.pageOfUsers,
@@ -196,7 +211,7 @@ const getUsers = (state = initState, action) => {
         err: null,
         curPage,
         startIndex,
-        pageSize: action.pageSize
+        pageSize: action.pageSize,
       };
     }
     case 'FETCH_PAGE_FAIL':
@@ -206,27 +221,6 @@ const getUsers = (state = initState, action) => {
         err: action.error
       };
     
-    case 'FETCH_START' : {
-      return {
-        ...state,
-        isLoading : true,
-      };
-    }
-    case 'FETCH_SUCCESS' : {
-      return {
-        type: 'FETCH_SUCCESS',
-        isLoading : false,
-        curUserList : action.users,
-        matrix: action.matrix,
-      };
-    }
-    case 'FETCH_FAIL' : {
-      return {
-        ...state,
-        isLoading: false,
-        err: action.error
-      };
-    }
     // Count Page
     case 'GET_COUNT_START':
         return {
@@ -246,12 +240,6 @@ const getUsers = (state = initState, action) => {
         isLoading: false,
         err: action.error
       }
-    // case 'JUMP_TO_PAGE' : {
-    //   return{
-    //     ...state,
-    //     pageNumber : action.page,
-    //   }
-    // }
 
     default:
       return state;

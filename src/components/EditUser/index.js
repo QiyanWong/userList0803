@@ -68,7 +68,6 @@ class EditUser extends Component {
   render() {
     const passwordStyle = {color: 'red'};
     const { redirect } = this.props;
-      console.log('isLoading', this.props.isLoading);
     if (redirect && !this.props.isLoading) {
       return <Redirect to = {{ pathname: '/' }}/>
     } else {

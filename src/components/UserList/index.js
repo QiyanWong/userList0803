@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { sortUsers, fetchPage } from '../../redux/action-creators';
+import { sortUsers, fetchPage, getCount, backToHome, emptySearchInput} from '../../redux/action-creators';
 import { Link } from 'react-router-dom';
 import Pagination from '../../containers/Pagination';
 
 class UserList extends Component {
   componentDidMount() {
-    // this.props.dispatch(getUsers());
     this.props.dispatch(fetchPage(1, 5));
+    this.props.dispatch(getCount());
     this.props.resetRedirect();
   }
   //一会加上
@@ -22,12 +22,15 @@ class UserList extends Component {
     this.props.dispatch(sortUsers(key));
   }
 
+  handleBackToHome = () => {
+    console.log( 'searchINPUT IS', this.props.searchInput);
+    this.props.dispatch(backToHome());
+  }
   render() {
     let showUsers = [];
     showUsers = this.props.isSearching === true ? 
                 this.props.searchUsers : this.props.pageOfUsers;
     const searchInput = this.props.searchInput;
-    console.log('%%%TEST ISLOADING', this.props.isLoading);
     if (this.props.isLoading) {
       return <div>Loading...</div>
     } else {
@@ -42,7 +45,7 @@ class UserList extends Component {
                 <button className = 'btn btn-primary' onClick = {e => this.props.search(searchInput)}> Search </button>
               </div>
               <div className = 'back'>
-                <button className = 'btn btn-primary' onClick = {e => this.props.backToHome()}> Back </button>
+                <button className = 'btn btn-primary' onClick = {e => this.handleBackToHome()}> Back </button>
               </div>
           </div>
           {/*  Table Part  */}
@@ -105,6 +108,7 @@ class UserList extends Component {
 const mapStateToProps = (state) => {
   return {
     pageOfUsers: state.getUsers.pageOfUsers,
+    searchInput: state.searchInput
     //pageNumber: state.getUsers.pageNumber
   };
 }

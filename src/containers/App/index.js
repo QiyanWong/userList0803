@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { deleteUser, createUser, resetRedirect, redirect, editUser, sortUsers, backToHome, search, changeSearchInput } from '../../redux/action-creators';
+import { deleteUser, createUser, resetRedirect, redirect, editUser, sortUsers, backToHome, search, changeSearchInput, getCount } from '../../redux/action-creators';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import UserList from '../../components/UserList';
 import CreateUser from '../../components/CreateUser';
@@ -18,11 +18,11 @@ class App extends Component {
   };
 
   //一会加上
-//   componentDidUpdate(prevProps, prevState) {
-//     if (!this.equals(this.props.pageOfUsers, prevProps.pageOfUsers)) {
-//       this.props.resetRedirect();
-//     }
-//   }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (!this.equals(this.props.pageOfUsers, prevProps.pageOfUsers)) {
+  //     this.props.resetRedirect();
+  //   }
+  // }
 
 //   equals = (one, two) => {
 //     if(one.length !== two.length)
@@ -35,8 +35,7 @@ class App extends Component {
 // }
   
   render() {
-    console.log('tesing in App isSearching', this.props.isSearching);
-    console.log('******test in app pageofusers', this.props.pageOfUsers);
+    //console.log('***test in app pageofusers', this.props.pageOfUsers);
     return (
       <BrowserRouter>
         <Switch>
@@ -57,6 +56,8 @@ class App extends Component {
                 searchChange = {this.props.changeSearchInput}
                 searchInput = {this.props.searchInput}
                 backToHome = {this.props.backToHome}
+                getCount = {this.props.getCount}
+               // emptySearchInput = {this.props.emptySearchInput} 
                 //onChangePage = {this.onChangePage}
                 //nextPage = {this.props.nextPage}
                 //jumTo = {this.props.jumpToPage}
@@ -101,7 +102,6 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    //users: state.getUsers.users,
     redirect: state.redirect,
     isLoading: state.getUsers.isLoading,
     isSearching: state.getUsers.isSearching,
@@ -109,10 +109,9 @@ const mapStateToProps = (state) => {
     searchInput: state.searchInput,
     pageOfUsers: state.getUsers.pageOfUsers,
     status : state.status,
-    matrix: state.getUsers.matrix,
-    totalItems: state.getUsers.totalItems,
+    //matrix: state.getUsers.matrix,
+   // totalItems: state.getUsers.totalItems,
     pageNumber: state.getUsers.pageNumber,
-    //pageOfUsers: state.getUsers.pageOfUsers
   }
 };
 
@@ -148,6 +147,12 @@ const mapDispatchToProps = (dispatch) => {
     changeSearchInput: (input) => {
       dispatch(changeSearchInput(input));
     },
+    // emptySearchInput: () => {
+    //   dispatch(emptySearchInput());
+    // }
+    getCount: () => {
+      dispatch(getCount());
+    }
     // nextPage: () => {
     //   dispatch(nextPage());
     // },
