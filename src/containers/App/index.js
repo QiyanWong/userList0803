@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { deleteUser, createUser, resetRedirect, redirect, editUser, sortUsers, backToHome, search, changeSearchInput, getCount } from '../../redux/action-creators';
+import { deleteUser, createUser, resetRedirect, redirect, editUser, sortUsers, backToHome, search, changeSearchInput, getCount,getUsers} from '../../redux/action-creators';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import UserList from '../../components/UserList';
 import CreateUser from '../../components/CreateUser';
@@ -45,7 +45,7 @@ class App extends Component {
             render = {() => 
               <UserList 
                 pageOfUsers = {this.props.pageOfUsers}
-                //getUsers = {this.props.getUsers}
+                getUsers = {this.props.getUsers}
                 deleteUser = {this.props.deleteUser}
                 sortUsers = {this.props.sortUsers}
                 isLoading = {this.props.isLoading}
@@ -57,6 +57,8 @@ class App extends Component {
                 searchInput = {this.props.searchInput}
                 backToHome = {this.props.backToHome}
                 getCount = {this.props.getCount}
+                curPage = {this.props.curPage}
+                users = {this.props.users}
                // emptySearchInput = {this.props.emptySearchInput} 
                 //onChangePage = {this.onChangePage}
                 //nextPage = {this.props.nextPage}
@@ -104,22 +106,24 @@ const mapStateToProps = (state) => {
   return {
     redirect: state.redirect,
     isLoading: state.getUsers.isLoading,
-    isSearching: state.getUsers.isSearching,
+    isSearching: state.searchInput.isSearching,
     searchUsers: state.getUsers.searchUsers,
-    searchInput: state.searchInput,
+    searchInput: state.searchInput.searchInput,
     pageOfUsers: state.getUsers.pageOfUsers,
     status : state.status,
     //matrix: state.getUsers.matrix,
    // totalItems: state.getUsers.totalItems,
     pageNumber: state.getUsers.pageNumber,
+    curPage: state.getUsers.curPage,
+    users: state.getUsers.users,
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // getUsers: () => {
-    //   dispatch(getUsers());
-    // },
+    getUsers: () => {
+      dispatch(getUsers());
+    },
     deleteUser: (_id) => {
       dispatch(deleteUser(_id));
     },
@@ -152,7 +156,8 @@ const mapDispatchToProps = (dispatch) => {
     // }
     getCount: () => {
       dispatch(getCount());
-    }
+    },
+
     // nextPage: () => {
     //   dispatch(nextPage());
     // },

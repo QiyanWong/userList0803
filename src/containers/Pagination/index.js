@@ -8,7 +8,6 @@ class Pagination extends Component {
     const pageSize = this.props.pageSize;
     const count = this.props.count;
     const numberList = [];
-  
     const totalPages = Math.ceil(count / pageSize);
     let startPage = 1, endPage = totalPages;
     console.log('setcurpage count is', count);
@@ -30,7 +29,7 @@ class Pagination extends Component {
   //一会加上
   componentDidUpdate(prevProps) {
     if (this.props.count !== prevProps.count) {
-      this.setCurPage(this.props.status.curPage);
+      this.setCurPage(this.props.curPage);
       console.log('componentDidUpdate prevpros count', prevProps.count);
     }
     //console.log('componentDidUpdate count', this.props.count);
@@ -46,10 +45,10 @@ class Pagination extends Component {
 
     const totalPages = Math.ceil(count / pageSize);
     let startPage = 1, endPage = totalPages;
-    console.log('setcurpage count is', count);
+    // console.log('setcurpage count is', count);
     for (let i = startPage; i <= endPage; i++) {
       pageNums.push(i);
-      console.log('set curpage already pushed', pageNums);
+      // console.log('set curpage already pushed', pageNums);
     }
     this.setState({ pageNums });
   };
@@ -67,10 +66,10 @@ class Pagination extends Component {
     const count = this.props.count;
     const pageSize = this.props.pageSize;
     const totalPages = Math.ceil(count / pageSize);
-    console.log('totalpage is ', totalPages);
-    console.log('~Testing count is~~ ', count);
-    console.log('~Testing pageNums is~~ ', pageNums);
-    console.log('~Testing pageSize is~~ ', pageSize);
+    // console.log('totalpage is ', totalPages);
+    // console.log('~Testing count is~~ ', count);
+    // console.log('~Testing pageNums is~~ ', pageNums);
+    // console.log('~Testing pageSize is~~ ', pageSize);
     return (
       // <ul className="pagination">
       //   <li className="page-item">

@@ -1,6 +1,6 @@
 const initState = {
   isLoading: false,
-  //users:[],
+  users:[],
   err: null,
   isSearching: false,
   searchUsers: [],
@@ -50,16 +50,20 @@ const getUsers = (state = initState, action) => {
       };
     case 'DELETE_USER_SUCCESS':
       let index = state.pageOfUsers.findIndex((item) => item._id === action.id);
-
+      let newCurPage = state.curPage;
+      if(state.pageOfUsers.length === 1) {
+        newCurPage -= 1;
+      }
       return {
         ...state,
-        curPage: state.curPage,
+        curPage: newCurPage,
         pageOfUsers: [
           ...state.pageOfUsers.slice(0, index),
           ...state.pageOfUsers.slice(index + 1)
         ],
-       // users: state.users.filter(user => user._id !== action.id),
+      //  users: state.users.filter(user => user._id !== action.id),
         isLoading:false,
+        count: state.count - 1,
         err: null,
       };
     
@@ -78,19 +82,20 @@ const getUsers = (state = initState, action) => {
     case 'CREATE_USER_SUCCESS':
       // const newUsers = state.users;
       // newUsers.push(action.user);
-      if (state.pageOfUsers.length < state.pageSize) {
+      const totalPages = Math.ceil(state.count / state.pageSize);
+      let newPage = totalPages;
+      if(state.pageOfUsers.length === state.pageSize) {
+        newPage += 1;
+      }
         return {
           ...state,
           isLoading: false,
           pageOfUsers:[
             ...state.pageOfUsers,
             action.user,
-          ]
+          ],
+          curPage : newPage,
         };
-      } else {
-        return state;
-      }
-     
     
     // Edit User 
     case 'EDIT_USER_START':
@@ -186,8 +191,8 @@ const getUsers = (state = initState, action) => {
       };
     case 'FETCH_PAGE_SUCCESS': {
       const size = state.pageSize;
-      const curPage = action.page;
-      const startIndex = (curPage - 1) * size;
+      // const curPage = action.page;
+      const startIndex = (action.page - 1) * size;
       // console.log('reduce testing size', size);
       // console.log('reduce testing curPage', curPage);
       // console.log('reduce testing startIndex', startIndex);
@@ -209,7 +214,7 @@ const getUsers = (state = initState, action) => {
         pageOfUsers: action.pageOfUsers,
         isLoading: false,
         err: null,
-        curPage,
+        curPage: action.page,
         startIndex,
         pageSize: action.pageSize,
       };

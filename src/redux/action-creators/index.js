@@ -153,40 +153,40 @@ export const deleteUser = (id, deleteUser) => {
 //   };
 // };
 
-// Get Userlist
-// const getUsersStart = () => {
-//   return {
-//     type: 'GET_USERS_START'
-//   };
-// };
 
-// const getUsersFail = (error) => {
-//   return {
-//     type: 'GET_USERS_ERROR',
-//     error
-//   };
-// };
+const getUsersStart = () => {
+  return {
+    type: 'GET_USERS_START'
+  };
+};
 
-// const getUsersSuccess = (response) => {
-//   return {
-//     type: 'GET_USERS_SUCCESS',
-//     data: response
-//   };
-// };
+const getUsersFail = (error) => {
+  return {
+    type: 'GET_USERS_ERROR',
+    error
+  };
+};
 
-// export const getUsers = () => {
-//   return (dispatch) => {
-//     dispatch(getUsersStart());
-//     axios
-//       .get('http://localhost:8080/api/users', getUsers)
-//       .then(response => {
-//         dispatch(getUsersSuccess(response.data));
-//       })
-//       .catch(error => {
-//         dispatch(getUsersFail(error));
-//       });
-//   };
-// };
+const getUsersSuccess = (response) => {
+  return {
+    type: 'GET_USERS_SUCCESS',
+    data: response
+  };
+};
+
+export const getUsers = () => {
+  return (dispatch) => {
+    dispatch(getUsersStart());
+    axios
+      .get('http://localhost:8080/api/', getUsers)
+      .then(response => {
+        dispatch(getUsersSuccess(response.data.users));
+      })
+      .catch(error => {
+        dispatch(getUsersFail(error));
+      });
+  };
+};
 
 // Redirect
 export const redirect = () => {
